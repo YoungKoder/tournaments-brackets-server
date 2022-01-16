@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Participant } from "src/participants/participants.model";
 
 /*Mandatory fields to create user object*/
 interface UserCreationAttrs {
@@ -43,4 +44,7 @@ export class User extends Model<User, UserCreationAttrs> {
     defaultValue: "",
   })
   icon: string;
+
+  @HasMany(() => Participant, "uId")
+  participants: Participant[];
 }

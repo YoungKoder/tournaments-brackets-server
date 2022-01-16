@@ -3,9 +3,19 @@ import { ConfigModule } from "@nestjs/config";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { User } from "./users/users.model";
 import { UsersModule } from "./users/users.module";
+import { ParticipantsController } from "./participants/participants.controller";
+import { ParticipantsModule } from "./participants/participants.module";
+import { Participant } from "./participants/participants.model";
+import { TournamentsModule } from "./tournaments/tournaments.module";
+import { Tournament } from "./tournaments/tournaments.model";
+import { MatchesModule } from "./matches/matches.module";
+import { Match } from "./matches/matches.model";
+import { CompetitorsController } from "./competitors/competitors.controller";
+import { CompetitorsModule } from "./competitors/competitors.module";
+import { Competitor } from "./competitors/competitors.model";
 
 @Module({
-  controllers: [],
+  controllers: [ParticipantsController, CompetitorsController],
   providers: [],
   imports: [
     ConfigModule.forRoot({
@@ -18,10 +28,14 @@ import { UsersModule } from "./users/users.module";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User],
+      models: [User, Participant, Tournament, Match, Competitor],
       autoLoadModels: true,
     }),
     UsersModule,
+    ParticipantsModule,
+    TournamentsModule,
+    MatchesModule,
+    CompetitorsModule,
   ],
 })
 export class AppModule {}
