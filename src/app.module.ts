@@ -13,7 +13,7 @@ import { Match } from "./matches/matches.model";
 import { CompetitorsController } from "./competitors/competitors.controller";
 import { CompetitorsModule } from "./competitors/competitors.module";
 import { Competitor } from "./competitors/competitors.model";
-
+import { AuthModule } from "./auth/auth.module";
 @Module({
   controllers: [ParticipantsController, CompetitorsController],
   providers: [],
@@ -36,6 +36,7 @@ import { Competitor } from "./competitors/competitors.model";
     TournamentsModule,
     MatchesModule,
     CompetitorsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

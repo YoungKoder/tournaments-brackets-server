@@ -11,3 +11,13 @@ Content-Type: application/json
     "icon":""
 }
 ###
+POST {{api}}/auth/register
+Content-Type: application/json
+
+{
+    "name":"TestUser",
+    "email": "newEmail123@gmail.com",
+    "password": "securePassword",
+    "icon":""
+}
+###

@@ -33,15 +33,15 @@ export class Participant extends Model<Participant, ParticipantCreationAttrs> {
   @Column({ type: DataType.INTEGER })
   uId: number;
 
+  @BelongsTo(() => User, "uId")
+  user: User;
+
   @ForeignKey(() => Tournament)
   @Column({ type: DataType.INTEGER })
   tId: number;
 
-  @BelongsTo(() => User, "uId")
-  user: User;
-
   @BelongsTo(() => Tournament, "tId")
-  tornament: Tournament;
+  tournament: Tournament;
 
   @Column({
     type: DataType.INTEGER,
