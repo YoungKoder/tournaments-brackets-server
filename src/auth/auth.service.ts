@@ -11,11 +11,17 @@ export class AuthService {
     private JwtService: JwtService
   ) {}
 
-  async login(userDto: CreateUserDto) {}
+  async login(userDto: CreateUserDto) {
+    const user = await this.validateUser(userDto);
+    return this.generateToken(user);
+  }
 
-  async validateUser(userDto: CreateUserDto) {
+  private async validateUser(userDto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
 
+    if (!user) {
+      throw new HttpException("Email isn't correct", HttpStatus.UNAUTHORIZED);
+    }
     const isPasswordEquals = await bcrypt.compare(
       userDto.password,
       user.password
@@ -24,6 +30,7 @@ export class AuthService {
     if (user && isPasswordEquals) {
       return user;
     }
+    throw new HttpException("Password isn't correct", HttpStatus.UNAUTHORIZED);
   }
 
   async register(userDto: CreateUserDto) {
@@ -40,11 +47,16 @@ export class AuthService {
     return this.generateToken(user);
   }
 
+  async check(userDto: CreateUserDto) {
+    const user = await this.userService.getUserByEmail(userDto.email);
+    return this.generateToken(user);
+  }
+
   private async generateToken(user: User) {
     const payload = {
-      id: user.id,
       email: user.email,
-      participants: user.participants,
+      name: user.name,
+      icon: user.icon,
     };
     return {
       token: this.JwtService.sign(payload),
