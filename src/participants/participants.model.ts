@@ -11,13 +11,17 @@ import { User } from "src/users/users.model";
 
 /*Mandatory fields to create participant object*/
 interface ParticipantCreationAttrs {
-  tId: number;
-  uId: number;
-  position: number;
+  tournament_id: number;
+  user_id: number;
   role: string;
 }
 
-export const UserRoles = ["Admin", "Owner", "Participant"];
+// export const UserRoles = ["Admin", "Owner"];
+export enum UserRoles {
+  owner = "Owner",
+  admin = "Admin",
+  player = "Player",
+}
 
 @Table({ tableName: "participants" })
 export class Participant extends Model<Participant, ParticipantCreationAttrs> {
@@ -31,26 +35,15 @@ export class Participant extends Model<Participant, ParticipantCreationAttrs> {
 
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
-  uId: number;
-
-  @BelongsTo(() => User, "uId")
-  user: User;
+  user_id: number;
 
   @ForeignKey(() => Tournament)
   @Column({ type: DataType.INTEGER })
-  tId: number;
-
-  @BelongsTo(() => Tournament, "tId")
-  tournament: Tournament;
+  tournament_id: number;
 
   @Column({
-    type: DataType.INTEGER,
-  })
-  position: number;
-
-  @Column({
-    type: DataType.ENUM({ values: UserRoles }),
-    defaultValue: "Participant",
+    type: DataType.STRING,
+    defaultValue: UserRoles.player,
   })
   role: string;
 }

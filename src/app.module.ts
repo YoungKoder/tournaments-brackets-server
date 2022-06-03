@@ -14,6 +14,7 @@ import { CompetitorsController } from "./competitors/competitors.controller";
 import { CompetitorsModule } from "./competitors/competitors.module";
 import { Competitor } from "./competitors/competitors.model";
 import { AuthModule } from "./auth/auth.module";
+import { MatchCompetitors } from "./competitors/match-competitors.model";
 @Module({
   controllers: [ParticipantsController, CompetitorsController],
   providers: [],
@@ -28,7 +29,14 @@ import { AuthModule } from "./auth/auth.module";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Participant, Tournament, Match, Competitor],
+      models: [
+        User,
+        Participant,
+        Tournament,
+        Match,
+        Competitor,
+        MatchCompetitors,
+      ],
       autoLoadModels: true,
     }),
     UsersModule,

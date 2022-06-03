@@ -27,3 +27,22 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5ld25ld25ld25ld0BnbWFpbC5jb20iLCJuYW1lIjoia2tra2tra2tsa2xrbCIsImljb24iOiIiLCJpYXQiOjE2NDk2MTI2MjgsImV4cCI6MTY0OTY5OTAyOH0.QdioKAjVvB6ykk1nt71Uemlxh2moC1w00qUjZPXWp0w
 
 ###
+
+POST {{api}}/tournaments/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImVtYWlsIjoibWFrc3Rlc2xlbmtvOTI0QGdtYWlsLmNvbSIsIm5hbWUiOiJSb290VVNlciIsImljb24iOiIiLCJpYXQiOjE2NTIyOTkwMzksImV4cCI6MTY1MjM4NTQzOX0.OzvQy0dPnFLT0_vU3tzo0-6rcy6KbmwmAhFBAzmZKz0
+
+{
+    "title":"Tournament 1",
+    "ownerEmail":"maksteslenko924@gmail.com",
+    "format":"Single Elimination",
+    "gameFormat":"5v5",
+    "game":"dota"
+}
+
+###
+
+GET {{api}}/tournaments/get/Dota
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImVtYWlsIjoibWFrc3Rlc2xlbmtvOTI0QGdtYWlsLmNvbSIsIm5hbWUiOiJSb290VVNlciIsImljb24iOiIiLCJpYXQiOjE2NTIzODA1MjEsImV4cCI6MTY1MjQ2NjkyMX0.tlLeVyg3bzMmVB_q-pMDJ_sgE3vMpF-vYhe1g1SITPU
+

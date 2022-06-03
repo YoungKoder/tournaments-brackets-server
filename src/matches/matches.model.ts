@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -8,16 +9,15 @@ import {
   Table,
 } from "sequelize-typescript";
 import { Competitor } from "src/competitors/competitors.model";
+import { MatchCompetitors } from "src/competitors/match-competitors.model";
 import { Tournament } from "src/tournaments/tournaments.model";
 
 /*Mandatory fields to create match object*/
 interface MatchCreationAttrs {
-  tId: number;
-  comment: string;
+  tournament_id: number;
   round: number;
   winner_mid: number;
-  position_0: number;
-  position_1: number;
+  external_id: number;
 }
 
 @Table({ tableName: "matches" })
@@ -32,13 +32,10 @@ export class Match extends Model<Match, MatchCreationAttrs> {
 
   @ForeignKey(() => Tournament)
   @Column({ type: DataType.INTEGER })
-  tId: number;
+  tournament_id: number;
 
-  @BelongsTo(() => Tournament, "tId")
+  @BelongsTo(() => Tournament, "tournament_id")
   tournament: Tournament;
-
-  @HasMany(() => Competitor)
-  competitors: Competitor[];
 
   @Column({
     type: DataType.STRING,
@@ -60,6 +57,11 @@ export class Match extends Model<Match, MatchCreationAttrs> {
   @Column({
     type: DataType.INTEGER,
   })
+  external_id: number;
+
+  @Column({
+    type: DataType.INTEGER,
+  })
   winner_mid: number;
 
   @Column({
@@ -76,4 +78,7 @@ export class Match extends Model<Match, MatchCreationAttrs> {
     type: DataType.INTEGER,
   })
   position_1: number;
+
+  @BelongsToMany(() => Competitor, () => MatchCompetitors)
+  competitors: Competitor[];
 }

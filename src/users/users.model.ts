@@ -1,5 +1,14 @@
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  Model,
+  Table,
+} from "sequelize-typescript";
+import { Competitor } from "src/competitors/competitors.model";
 import { Participant } from "src/participants/participants.model";
+import { Tournament } from "src/tournaments/tournaments.model";
 
 /*Mandatory fields to create user object*/
 interface UserCreationAttrs {
@@ -45,6 +54,9 @@ export class User extends Model<User, UserCreationAttrs> {
   })
   icon: string;
 
-  @HasMany(() => Participant, "uId")
-  participants: Participant[];
+  @BelongsToMany(() => Tournament, () => Participant)
+  tournaments: Tournament[];
+
+  @HasMany(() => Competitor)
+  competitors: Competitor[];
 }

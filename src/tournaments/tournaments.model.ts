@@ -1,6 +1,14 @@
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  Model,
+  Table,
+} from "sequelize-typescript";
 import { Match } from "src/matches/matches.model";
 import { Participant } from "src/participants/participants.model";
+import { User } from "src/users/users.model";
 
 export const TournamentsTypes = ["bracket", "round_robin", "ladder"];
 export const brackeTorunamentTypeFormats = [
@@ -11,12 +19,10 @@ export const brackeTorunamentTypeFormats = [
 interface TournamentCreationAttrs {
   title: string;
   type: string;
-  size: number;
-  bronzeMatch: boolean;
+  game: string;
+  gameFormat: string;
   format: string;
-  picture_long: string | null;
-  picture_small: string | null;
-  picture_original: string | null;
+  ownerEmail: string;
 }
 
 @Table({ tableName: "tournaments" })
@@ -29,8 +35,8 @@ export class Tournament extends Model<Tournament, TournamentCreationAttrs> {
   })
   id: number;
 
-  @HasMany(() => Participant, "tId")
-  participants: Participant[];
+  @BelongsToMany(() => User, () => Participant)
+  users: User[];
 
   @Column({
     type: DataType.STRING,
@@ -56,12 +62,17 @@ export class Tournament extends Model<Tournament, TournamentCreationAttrs> {
   })
   bronze_match: boolean;
 
-  @HasMany(() => Match, "tId")
+  @HasMany(() => Match, "tournament_id")
   matches: Match[];
 
   @Column({
+    type: DataType.STRING,
+  })
+  game: string;
+
+  @Column({
     type: DataType.INTEGER,
-    defaultValue: 4,
+    defaultValue: 8,
   })
   size: number;
 
